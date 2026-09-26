@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pauta Bienes Raíces Marfil</title>
+<!--
+THESIS: el lote que avanza. Una foto aérea real de lotes, apagada en navy, con un solo lote
+encendido a color y trazado en teal: la tecnología marca qué cliente avanza. Rechaza el banner
+inmobiliario de foto bonita + texto encima.
+OWN-WORLD: navy #0a2342 como tinta sobre la foto; verde #18A967 solo en el trazo del lote, la
+palabra clave del titular y el CTA. Poppins 800 titulares / Lato cuerpo.
+STORY: "atiende más clientes, vende más" → equipo de tecnología experto en bienes raíces →
+desde USD 499/mes → asesoría gratis (formulario calificatorio).
+FIRST VIEWPORT: 1080×1080. Titular 4 líneas a la izquierda; lote iluminado abajo-derecha con
+etiqueta flotante; precio + CTA pill teal abajo-izquierda.
+FORM: extensión del sistema Sixteam (DESIGN.md), sin cambio de mundo.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory:#F6F5F0; --ink:#121820; --ink-soft:#4a5560; --green:#25D366; --green-deep:#18A967; --green-light:#DCF7E8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#20242a; font-family:'Manrope',sans-serif; display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px 16px; -webkit-font-smoothing:antialiased; }
+  body.solo { padding:0; gap:0; display:block; }
+  body.solo .ad:not(.on) { display:none; }
+
+  .ad {
+    width:1080px; height:1080px; position:relative; overflow:hidden; background:var(--ivory); color:var(--ink);
+    font-feature-settings:"kern" 1; text-rendering:optimizeLegibility; flex-shrink:0;
+  }
+
+  /* Foto: capa base apagada + capa a color recortada al lote */
+  .photo { position:absolute; inset:0; background-image:var(--img); background-repeat:no-repeat;
+           background-size:var(--img-w) auto; background-position:var(--img-x) var(--img-y); }
+  .photo.base { filter:grayscale(1) contrast(.85) brightness(1.08); }
+  .tint { position:absolute; inset:0;
+    background:
+      linear-gradient(90deg, rgba(246,245,240,.97) 0%, rgba(246,245,240,.92) 42%, rgba(246,245,240,.6) 66%, rgba(246,245,240,.4) 100%),
+      linear-gradient(180deg, rgba(246,245,240,.92) 0%, rgba(246,245,240,.75) 40%, rgba(246,245,240,0) 60%),
+      linear-gradient(0deg, rgba(246,245,240,.85) 0%, rgba(246,245,240,.5) 22%, rgba(246,245,240,0) 38%);
+    mix-blend-mode:normal; }
+  .photo.lit { clip-path:var(--lot-clip); filter:saturate(1.15); }
+  .trace { position:absolute; inset:0; pointer-events:none; }
+
+  /* Etiqueta flotante sobre el lote */
+  .tag { position:absolute; left:var(--tag-x); top:var(--tag-y); display:flex; align-items:center; gap:14px;
+         background:#fff; border-radius:16px; padding:16px 22px 16px 16px;
+         box-shadow:0 14px 34px rgba(18,24,32,.16); }
+  .tag .dot { width:44px; height:44px; border-radius:50%; background:var(--green); display:grid; place-items:center; flex-shrink:0; }
+  .tag b { display:block; font-family:'Manrope',sans-serif; font-weight:700; font-size:21px; font-weight:800; color:var(--ink); line-height:1.2; }
+  .tag span { display:block; font-size:17px; font-weight:600; color:var(--ink-soft); line-height:1.3; margin-top:2px; }
+
+  /* Texto */
+  .copy { position:absolute; left:76px; top:92px; right:76px; bottom:76px; display:flex; flex-direction:column; }
+  .kicker-unused { font-weight:600; font-size:18px; letter-spacing:.14em; text-transform:uppercase; color:rgba(224,224,224,.8); }
+  h1 { margin-top:0; }
+  h1 .a { display:block; font-family:'Manrope',sans-serif; font-weight:800; font-size:80px; line-height:.98; letter-spacing:-.02em; color:var(--ink); }
+  h1 .b { display:block; margin-top:14px; font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; font-size:100px; line-height:.95; letter-spacing:0; color:var(--green-deep); }
+
+  .close { margin-top:auto; display:flex; flex-direction:column; align-items:flex-start; gap:30px; }
+  .price { font-size:30px; line-height:1.3; color:var(--ink-soft); font-weight:500; white-space:nowrap; }
+  .price strong { color:var(--ink); font-weight:800; }
+  .cta { display:inline-flex; align-items:center; gap:14px; background:var(--green); color:var(--ink);
+         font-family:'Manrope',sans-serif; font-weight:800; font-size:30px; padding:26px 42px; border-radius:999px;
+         box-shadow:0 12px 28px rgba(24,169,103,.28); }
+</style>
+</head>
+<body>
+
+<!-- ============ V1 · LOTES ============ -->
+<div class="ad" id="lotes" style="
+  --img:url(__IMG_LOTES__); --img-w:1440px; --img-x:-300px; --img-y:0px;
+  --lot-clip:polygon(747px 616px, 940px 616px, 940px 1080px, 747px 1080px);
+  --tag-x:640px; --tag-y:524px;">
+  <div class="photo base"></div>
+  <div class="tint"></div>
+  <div class="photo lit"></div>
+  <svg class="trace" viewBox="0 0 1080 1080" aria-hidden="true">
+    <polygon points="747,616 940,616 940,1084 747,1084" fill="none" stroke="#18A967" stroke-width="5" stroke-dasharray="14 10"/>
+  </svg>
+  <div class="tag">
+    <div class="dot"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <div><b>Nuevo interesado</b><span>Atendido al instante</span></div>
+  </div>
+  <div class="copy">
+    <h1><span class="a">Tu equipo de<br>tecnología experto</span><span class="b">en soluciones con IA<br>para bienes raíces</span></h1>
+    <div class="close">
+      <p class="price">Por menos de <strong>un salario mínimo</strong> al&nbsp;mes.</p>
+      <div class="cta">Empieza hoy tu transformación <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ V2 · PROPIEDADES ============ -->
+<div class="ad" id="propiedades" style="
+  --img:url(__IMG_PROP__); --img-w:1800px; --img-x:-720px; --img-y:-120px;
+  --lot-clip:polygon(775px 690px, 1000px 745px, 955px 955px, 740px 905px);
+  --tag-x:640px; --tag-y:585px;">
+  <div class="photo base"></div>
+  <div class="tint"></div>
+  <div class="photo lit"></div>
+  <svg class="trace" viewBox="0 0 1080 1080" aria-hidden="true">
+    <polygon points="775,690 1000,745 955,955 740,905" fill="none" stroke="#18A967" stroke-width="5" stroke-dasharray="14 10" stroke-linejoin="round"/>
+  </svg>
+  <div class="tag">
+    <div class="dot"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <div><b>Nuevo interesado</b><span>Atendido al instante</span></div>
+  </div>
+  <div class="copy">
+    <h1><span class="a">Tu equipo de<br>tecnología experto</span><span class="b">en soluciones con IA<br>para bienes raíces</span></h1>
+    <div class="close">
+      <p class="price">Por menos de <strong>un salario mínimo</strong> al&nbsp;mes.</p>
+      <div class="cta">Empieza hoy tu transformación <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var v = new URLSearchParams(location.search).get('v');
+  if (v) { document.body.classList.add('solo'); var el = document.getElementById(v); if (el) el.classList.add('on'); }
+</script>
+</body>
+</html>

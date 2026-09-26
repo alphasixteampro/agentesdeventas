@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrusel · Del caos al orden — Sixteam.pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F6F4EE;
+    --card:#FFFFFF;
+    --ink:#0A2342;          /* negro azulado — texto */
+    --ink-2:#5B6B7C;        /* secundario */
+    --ink-3:#93A0AD;        /* muted / estado sin resolver */
+    --line:rgba(10,35,66,.10);
+    --line-2:rgba(10,35,66,.06);
+    --green:#00BFA5;        /* único acento */
+    --green-ink:#04836F;
+    --green-soft:rgba(0,191,165,.12);
+    --gray-chip:#ECEFF2;
+    --sh-1:0 1px 2px rgba(10,35,66,.05);
+    --sh-2:0 8px 24px rgba(10,35,66,.08);
+    --sh-3:0 14px 34px rgba(10,35,66,.11);
+    --pad:34px;
+    --r-card:16px; --r-chip:9px; --r-btn:12px;
+    font-feature-settings:"kern" 1;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body{
+    background:#E9EBEE;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center;
+    padding:30px 16px 64px;
+    font-family:'Manrope',sans-serif;
+    color:var(--ink);
+  }
+
+  .page-title{ font-family:'Sora',sans-serif; font-weight:600; font-size:15px; color:#0A2342; letter-spacing:-.01em; }
+  .page-sub{ font-size:12px; color:#6b7682; margin:5px 0 22px; letter-spacing:.01em; }
+
+  /* Marco Instagram (solo preview) */
+  .ig-frame{ width:400px; background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 24px 70px rgba(10,35,66,.22); }
+  .ig-top{ display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid #eef0f2; }
+  .ig-avatar{ width:34px; height:34px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .ig-avatar span{ font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; }
+  .ig-avatar span b{ color:var(--green); font-weight:700; }
+  .ig-meta{ display:flex; flex-direction:column; line-height:1.3; }
+  .ig-handle{ font-weight:700; font-size:13px; color:#111; }
+  .ig-loc{ font-size:11px; color:#8a929b; }
+  .ig-more{ margin-left:auto; color:#8a929b; font-weight:700; letter-spacing:1px; }
+
+  .ig-viewport{ width:400px; overflow:hidden; position:relative; touch-action:pan-y; }
+  .slides-track{ display:flex; transition:transform .4s cubic-bezier(.4,0,.2,1); }
+  .slides-track.dragging{ transition:none; }
+
+  /* ---- SLIDE base (unidad de export 4:5 · 1080×1350) ---- */
+  .slide{
+    width:400px; aspect-ratio:4/5; flex-shrink:0;
+    position:relative; overflow:hidden;
+    background:var(--ivory);
+    padding:var(--pad);
+    display:flex; flex-direction:column;
+  }
+
+  /* Header consistente en TODAS las páginas */
+  .s-head{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:7px; }
+  .brand-dot{ width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px var(--green-soft); }
+  .brand-name{ font-family:'Sora',sans-serif; font-weight:600; font-size:12.5px; color:var(--ink); letter-spacing:-.01em; }
+  .idx{
+    display:inline-flex; align-items:center; gap:5px;
+    height:24px; padding:0 10px;
+    border:1px solid var(--line); border-radius:100px;
+    background:rgba(255,255,255,.5);
+    font-family:'Sora',sans-serif; font-weight:500; font-size:11px;
+    color:var(--ink-2); letter-spacing:.02em; font-variant-numeric:tabular-nums;
+  }
+  .idx b{ color:var(--ink); font-weight:600; }
+  .idx .g{ color:var(--green-ink); font-weight:600; }
+
+  /* Bloque de texto */
+  .eyebrow{ font-weight:700; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); }
+  .eyebrow.g{ color:var(--green-ink); }
+  .headline{ font-family:'Sora',sans-serif; font-weight:700; color:var(--ink); letter-spacing:-.02em; line-height:1.13; font-size:27px; }
+  .headline .accent{ color:var(--green-ink); }
+  .sub{ font-size:13px; line-height:1.5; color:var(--ink-2); font-weight:500; max-width:30ch; }
+
+  /* Footer progreso consistente */
+  .s-foot{ margin-top:auto; display:flex; align-items:center; gap:10px; padding-top:16px; }
+  .track-line{ flex:1; height:3px; background:var(--line-2); border-radius:2px; overflow:hidden; }
+  .track-fill{ height:100%; background:var(--green); border-radius:2px; }
+  .track-fill.mut{ background:var(--ink-3); }
+  .foot-label{ font-size:10px; font-weight:600; color:var(--ink-3); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+
+  /* ---- Componentes de UI (lenguaje CRM) ---- */
+  .cluster{ position:relative; flex:1; margin:6px -6px 0; }
+  .mock{
+    position:absolute;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--r-card); box-shadow:var(--sh-2);
+    padding:11px 13px;
+  }
+  .mock .m-row{ display:flex; align-items:center; gap:8px; }
+  .mock .m-ico{ color:var(--ink-3); flex-shrink:0; display:flex; }
+  .mock .m-tt{ font-weight:700; font-size:12px; color:var(--ink); letter-spacing:-.01em; }
+  .mock .m-sub{ font-size:11px; color:var(--ink-2); font-weight:500; margin-top:2px; }
+
+  .bubble{
+    display:inline-block; max-width:210px;
+    background:#fff; border:1px solid var(--line);
+    border-radius:14px 14px 14px 4px;
+    padding:9px 12px; font-size:12px; font-weight:500; color:var(--ink);
+    box-shadow:var(--sh-1); line-height:1.35;
+  }
+  .bubble.me{ border-radius:14px 14px 4px 14px; background:var(--green); border-color:transparent; color:#fff; box-shadow:0 6px 16px rgba(0,191,165,.28); }
+  .bubble .b-time{ display:block; font-size:9.5px; font-weight:600; margin-top:4px; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+  .bubble.me .b-time{ color:rgba(255,255,255,.8); }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    height:22px; padding:0 9px; border-radius:var(--r-chip);
+    font-size:10.5px; font-weight:700; letter-spacing:.01em;
+    background:var(--gray-chip); color:var(--ink-2);
+  }
+  .tag.g{ background:var(--green-soft); color:var(--green-ink); }
+  .tag .dt{ width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+  .sticky{
+    position:absolute; width:118px; padding:12px 12px 14px;
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    box-shadow:var(--sh-2); font-family:'Sora',sans-serif;
+    font-weight:500; font-size:12px; color:var(--ink-2); line-height:1.3;
+  }
+  .sticky .pin{ position:absolute; top:-5px; left:14px; width:26px; height:9px; background:var(--gray-chip); border-radius:3px; }
+
+  /* Pipeline ordenado */
+  .board{ flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:16px; align-content:start; }
+  .col-h{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .col-t{ font-size:9.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3); }
+  .col-n{ font-size:9.5px; font-weight:700; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+  .col-t.g,.col-n.g{ color:var(--green-ink); }
+  .pcard{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:8px; box-shadow:var(--sh-1); margin-bottom:7px; }
+  .pcard .pl-1{ height:6px; border-radius:3px; background:rgba(10,35,66,.16); }
+  .pcard .pl-2{ height:5px; border-radius:3px; background:var(--line); margin-top:5px; width:70%; }
+  .pcard.win{ border-color:var(--green); box-shadow:0 8px 18px rgba(0,191,165,.16); }
+  .pcard.win .pl-1{ background:var(--green); }
+  .col.win{ background:var(--green-soft); border-radius:12px; padding:8px 7px; margin:-8px -1px; }
+
+  /* Card limpia (giro) */
+  .clean-card{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--r-card); box-shadow:var(--sh-2);
+    padding:15px; width:100%;
+  }
+  .cc-top{ display:flex; align-items:center; gap:11px; }
+  .cc-av{ width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#0a2342,#1d70a2); display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; flex-shrink:0; }
+  .cc-name{ font-weight:700; font-size:13.5px; color:var(--ink); }
+  .cc-meta{ font-size:11px; color:var(--ink-2); font-weight:500; margin-top:1px; }
+  .cc-div{ height:1px; background:var(--line-2); margin:13px 0; }
+  .cc-line{ display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:var(--ink); }
+  .cc-line + .cc-line{ margin-top:9px; }
+  .check{ width:18px; height:18px; border-radius:50%; background:var(--green); display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+  /* Dashboard mini (CTA) */
+  .dash{ display:flex; gap:8px; margin-top:2px; }
+  .stat{ flex:1; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:11px 12px; box-shadow:var(--sh-1); }
+  .stat .s-k{ font-size:9.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); }
+  .stat .s-v{ font-family:'Sora',sans-serif; font-weight:700; font-size:19px; color:var(--ink); margin-top:3px; letter-spacing:-.02em; }
+  .stat .s-v.g{ color:var(--green-ink); }
+
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:9px;
+    background:var(--green); color:#fff;
+    font-weight:800; font-size:14.5px; letter-spacing:-.01em;
+    padding:14px 22px; border-radius:var(--r-btn);
+    box-shadow:0 12px 26px rgba(0,191,165,.32);
+  }
+  .cta-sig{ display:flex; align-items:center; gap:7px; margin-top:16px; }
+  .cta-sig .brand-name{ font-size:13px; }
+
+  /* Flujo automatización */
+  .flow{ display:flex; align-items:center; gap:0; margin-top:14px; }
+  .node{ display:inline-flex; align-items:center; gap:7px; background:var(--card); border:1px solid var(--line); border-radius:100px; padding:7px 12px; font-size:11px; font-weight:700; color:var(--ink); box-shadow:var(--sh-1); }
+  .node.g{ border-color:var(--green); color:var(--green-ink); }
+  .node .zap{ color:var(--green); display:flex; }
+  .flow-link{ flex:1; height:2px; background:repeating-linear-gradient(90deg,var(--line) 0 5px,transparent 5px 10px); min-width:14px; }
+
+  /* Dots navegación (preview) */
+  .dots{ display:flex; justify-content:center; gap:6px; padding:14px 0 4px; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:rgba(10,35,66,.2); cursor:pointer; transition:.2s; }
+  .dot.active{ background:var(--green); width:18px; border-radius:3px; }
+  .ig-caption{ background:#fff; color:#2b3540; font-size:12px; line-height:1.55; padding:4px 16px 16px; }
+  .ig-caption b{ color:#111; }
+  .hint{ text-align:center; font-size:11px; color:#8a929b; margin-top:14px; }
+</style>
+</head>
+<body>
+
+  <div class="page-title">Carrusel · Del caos al orden operativo</div>
+  <div class="page-sub">8 slides · 4:5 (1080×1350) · estética editorial SaaS · desliza →</div>
+
+  <div class="ig-frame">
+    <div class="ig-top">
+      <div class="ig-avatar"><span>S<b>.</b></span></div>
+      <div class="ig-meta">
+        <span class="ig-handle">sixteam.pro</span>
+        <span class="ig-loc">Sixteam Ops · Operación comercial</span>
+      </div>
+      <span class="ig-more">•••</span>
+    </div>
+
+    <div class="ig-viewport" id="viewport">
+      <div class="slides-track" id="track">
+
+        <!-- ============ 01 · PORTADA (caos) ============ -->
+        <div class="slide" id="slide-0">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx">Sixteam&nbsp;Ops</span>
+          </div>
+
+          <div class="cluster">
+            <!-- burbuja sin leer -->
+            <div class="mock" style="top:6px; left:2px; width:196px; transform:rotate(-4deg);">
+              <div class="m-row">
+                <span class="m-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="m-tt">Hola, &iquest;siguen disponibles?</span>
+              </div>
+              <div class="m-sub">Nuevo contacto &middot; hace 2&nbsp;h</div>
+            </div>
+            <!-- toast leads sin asignar -->
+            <div class="mock" style="top:96px; right:0; width:182px; transform:rotate(3deg);">
+              <div class="m-row" style="justify-content:space-between;">
+                <div class="m-row" style="gap:7px;">
+                  <span class="m-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>
+                  <span class="m-tt">3 leads nuevos</span>
+                </div>
+              </div>
+              <div style="margin-top:8px;"><span class="tag">sin asignar</span></div>
+            </div>
+            <!-- sticky recordatorio -->
+            <div class="sticky" style="top:150px; left:14px; transform:rotate(-6deg);"><span class="pin"></span>llamar a Marta&hellip;?</div>
+            <!-- chip llamada perdida -->
+            <div class="mock" style="top:198px; right:22px; width:150px; transform:rotate(5deg); padding:9px 11px;">
+              <div class="m-row" style="gap:7px;">
+                <span class="m-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 5l6 6M21 5l-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M22 16.9v2.1a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 3h2.1a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.5 10.4a16 16 0 0 0 6 6l1-1a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.8 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+                <span class="m-tt" style="font-size:11px;">Llamada perdida</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:6px;">
+            <h1 class="headline" style="font-size:29px;">Así se ve una operación comercial <span style="color:var(--ink-3);">sin operar.</span></h1>
+            <div class="s-foot">
+              <div class="track-line"><div class="track-fill mut" style="width:12%;"></div></div>
+              <span class="foot-label">Desliza para ordenarla →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ 02 · TIEMPO DE RESPUESTA ============ -->
+        <div class="slide" id="slide-1">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><b>01</b>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow">Tiempo de respuesta</span>
+            <h2 class="headline" style="margin-top:12px;">Un lead que espera es un lead que se enfr&iacute;a.</h2>
+            <p class="sub" style="margin-top:14px;">Cada minuto sin respuesta baja la probabilidad de cierre &mdash; y nadie vuelve a preguntar dos veces.</p>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:12px; margin:6px 0;">
+            <div class="bubble">Me interesa, &iquest;me pasas la informaci&oacute;n?<span class="b-time">Cliente &middot; 14:02</span></div>
+            <div class="mock" style="position:relative; width:210px; align-self:flex-end; padding:10px 13px; box-shadow:var(--sh-1);">
+              <div class="m-row" style="justify-content:space-between;">
+                <span class="m-sub" style="margin:0; font-style:normal;">Escribiendo respuesta&hellip;</span>
+                <span class="tag"><span class="dt"></span>04:12&nbsp;h</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill mut" style="width:25%;"></div></div>
+            <span class="foot-label">01 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 03 · SEGUIMIENTO ============ -->
+        <div class="slide" id="slide-2">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><b>02</b>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow">Seguimiento</span>
+            <h2 class="headline" style="margin-top:12px;">El seguimiento no puede vivir en tu memoria.</h2>
+            <p class="sub" style="margin-top:14px;">Sin una pr&oacute;xima acci&oacute;n y una fecha, cada oportunidad depende de que alguien la recuerde.</p>
+          </div>
+
+          <div class="cluster" style="flex:1;">
+            <div class="sticky" style="top:14px; left:6px; transform:rotate(-5deg);"><span class="pin"></span>recordar llamar</div>
+            <div class="sticky" style="top:6px; left:130px; transform:rotate(4deg);"><span class="pin"></span>&iquest;ya le escrib&iacute;?</div>
+            <div class="sticky" style="top:92px; left:64px; transform:rotate(-2deg);"><span class="pin"></span>seguir el viernes</div>
+            <div class="sticky" style="top:104px; right:2px; transform:rotate(6deg); color:var(--ink-3);"><span class="pin"></span>pendiente&hellip;</div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill mut" style="width:37.5%;"></div></div>
+            <span class="foot-label">02 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 04 · VISIBILIDAD ============ -->
+        <div class="slide" id="slide-3">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><b>03</b>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow">Visibilidad</span>
+            <h2 class="headline" style="margin-top:12px;">Lo que no puedes ver, no lo puedes operar.</h2>
+            <p class="sub" style="margin-top:14px;">Sin un tablero en tiempo real, tu &aacute;rea comercial es una caja negra.</p>
+          </div>
+
+          <div class="board" style="opacity:.85;">
+            <div class="col">
+              <div class="col-h"><span class="col-t">Nuevo</span><span class="col-n">?</span></div>
+              <div class="pcard"><div class="pl-1" style="width:80%"></div><div class="pl-2"></div></div>
+              <div class="pcard"><div class="pl-1" style="width:60%"></div><div class="pl-2"></div></div>
+            </div>
+            <div class="col">
+              <div class="col-h"><span class="col-t">&iquest;?</span><span class="col-n">?</span></div>
+              <div class="pcard"><div class="pl-1" style="width:70%"></div><div class="pl-2"></div></div>
+            </div>
+            <div class="col">
+              <div class="col-h"><span class="col-t" style="color:var(--line)">&mdash;</span><span class="col-n">?</span></div>
+              <div class="pcard" style="opacity:.5"><div class="pl-1" style="width:50%"></div></div>
+            </div>
+            <div class="col">
+              <div class="col-h"><span class="col-t">&iquest;?</span><span class="col-n">?</span></div>
+              <div class="pcard"><div class="pl-1" style="width:65%"></div><div class="pl-2"></div></div>
+              <div class="pcard" style="opacity:.5"><div class="pl-1" style="width:40%"></div></div>
+            </div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill mut" style="width:50%;"></div></div>
+            <span class="foot-label">03 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 05 · EL GIRO ============ -->
+        <div class="slide" id="slide-4">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><span class="g">04</span>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow g">El cambio</span>
+            <h2 class="headline" style="margin-top:12px;">Ahora, as&iacute; se ve cuando <span class="accent">alguien la opera.</span></h2>
+            <p class="sub" style="margin-top:14px;">Los mismos leads. Un sistema que no depende de la suerte.</p>
+          </div>
+
+          <div style="flex:1; display:flex; align-items:center;">
+            <div class="clean-card">
+              <div class="cc-top">
+                <div class="cc-av">MG</div>
+                <div>
+                  <div class="cc-name">Marta Guti&eacute;rrez</div>
+                  <div class="cc-meta">Lead entrante &middot; WhatsApp</div>
+                </div>
+                <span class="tag g" style="margin-left:auto;"><span class="dt"></span>Asignada</span>
+              </div>
+              <div class="cc-div"></div>
+              <div class="cc-line"><span class="check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Respondida en 2&nbsp;min</div>
+              <div class="cc-line"><span class="check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Pr&oacute;xima acci&oacute;n: llamada &middot; mar 10:00</div>
+            </div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill" style="width:62.5%;"></div></div>
+            <span class="foot-label">04 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 06 · PIPELINE ============ -->
+        <div class="slide" id="slide-5">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><span class="g">05</span>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow g">Pipeline</span>
+            <h2 class="headline" style="margin-top:12px;">Cada lead en su etapa. Cada etapa con due&ntilde;o.</h2>
+            <p class="sub" style="margin-top:14px;">Una sola vista, en tiempo real, para toda la operaci&oacute;n.</p>
+          </div>
+
+          <div class="board">
+            <div class="col">
+              <div class="col-h"><span class="col-t">Nuevo</span><span class="col-n">2</span></div>
+              <div class="pcard"><div class="pl-1" style="width:78%"></div><div class="pl-2"></div></div>
+              <div class="pcard"><div class="pl-1" style="width:62%"></div><div class="pl-2"></div></div>
+            </div>
+            <div class="col">
+              <div class="col-h"><span class="col-t">Contactado</span><span class="col-n">3</span></div>
+              <div class="pcard"><div class="pl-1" style="width:70%"></div><div class="pl-2"></div></div>
+              <div class="pcard"><div class="pl-1" style="width:66%"></div><div class="pl-2"></div></div>
+              <div class="pcard"><div class="pl-1" style="width:55%"></div><div class="pl-2"></div></div>
+            </div>
+            <div class="col">
+              <div class="col-h"><span class="col-t">Propuesta</span><span class="col-n">1</span></div>
+              <div class="pcard"><div class="pl-1" style="width:72%"></div><div class="pl-2"></div></div>
+            </div>
+            <div class="col win">
+              <div class="col-h"><span class="col-t g">Ganado</span><span class="col-n g">1</span></div>
+              <div class="pcard win"><div class="pl-1" style="width:80%"></div><div class="pl-2"></div></div>
+            </div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill" style="width:75%;"></div></div>
+            <span class="foot-label">05 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 07 · AUTOMATIZACIÓN ============ -->
+        <div class="slide" id="slide-6">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><span class="g">06</span>&nbsp;/&nbsp;06</span>
+          </div>
+
+          <div style="margin-top:26px;">
+            <span class="eyebrow g">Automatizaci&oacute;n</span>
+            <h2 class="headline" style="margin-top:12px;">Responde en segundos, aunque t&uacute; no est&eacute;s.</h2>
+            <p class="sub" style="margin-top:14px;">IA + tu equipo operando el sistema, mes a mes.</p>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:12px; margin:4px 0;">
+            <div class="bubble">&iexcl;Hola! &iquest;Tienen disponibilidad esta semana?<span class="b-time">Cliente &middot; 21:47</span></div>
+            <div style="align-self:flex-end; text-align:right;">
+              <div class="bubble me">&iexcl;Hola! Claro, aqu&iacute; tienes la informaci&oacute;n y un enlace para agendar.<span class="b-time">Sixteam Ops &middot; 21:47</span></div>
+            </div>
+            <div class="flow">
+              <span class="node"><span class="m-ico" style="color:var(--ink-3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Lead entra</span>
+              <span class="flow-link"></span>
+              <span class="node g"><span class="zap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg></span>Respondido &middot; 00:12</span>
+            </div>
+          </div>
+
+          <div class="s-foot">
+            <div class="track-line"><div class="track-fill" style="width:87.5%;"></div></div>
+            <span class="foot-label">06 · 06</span>
+          </div>
+        </div>
+
+        <!-- ============ 08 · CTA ============ -->
+        <div class="slide" id="slide-7">
+          <div class="s-head">
+            <div class="brand"><span class="brand-dot"></span><span class="brand-name">Sixteam.pro</span></div>
+            <span class="idx"><span class="g">Sixteam&nbsp;Ops</span></span>
+          </div>
+
+          <div style="margin-top:24px;">
+            <span class="eyebrow g">Del caos al orden</span>
+            <h2 class="headline" style="margin-top:12px; font-size:29px;">Operamos tu sistema comercial. <span class="accent">T&uacute; cierras.</span></h2>
+            <p class="sub" style="margin-top:14px;">No implementamos y nos vamos &mdash; nos quedamos operando, mes a mes.</p>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <div class="dash">
+              <div class="stat"><div class="s-k">Respuesta</div><div class="s-v g">&lt; 1 min</div></div>
+              <div class="stat"><div class="s-k">Leads sin asignar</div><div class="s-v">0</div></div>
+              <div class="stat"><div class="s-k">Visibilidad</div><div class="s-v g">Tiempo real</div></div>
+            </div>
+          </div>
+
+          <div>
+            <a class="cta-btn">Agenda 20 minutos
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="cta-sig">
+              <span class="brand-dot"></span>
+              <span class="brand-name">Sixteam.pro</span>
+              <span style="font-size:11.5px; color:var(--ink-3); font-weight:600;">&middot; tu equipo de tecnolog&iacute;a centralizado</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="dots" id="dots"></div>
+
+    <div class="ig-caption">
+      <b>El problema no es conseguir leads. Es lo que pasa despu&eacute;s de que llegan.</b> La mayor&iacute;a de las operaciones comerciales no est&aacute;n desordenadas: est&aacute;n sin operar. Sixteam Ops opera tu CRM, automatizaciones y visibilidad mes a mes para que ning&uacute;n lead se enfr&iacute;e esperando. &iquest;C&oacute;mo se ver&iacute;a en tu negocio? Agenda 20 minutos (link en bio).
+    </div>
+  </div>
+
+  <div class="hint">← → o arrastra para navegar</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const dotsWrap = document.getElementById('dots');
+  const total = track.children.length;
+  const W = 400;
+  let index = 0;
+
+  for(let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', ()=>go(i));
+    dotsWrap.appendChild(d);
+  }
+  const dots = [...dotsWrap.children];
+
+  function go(i){
+    index = Math.max(0, Math.min(total-1, i));
+    track.style.transform = `translateX(${-index*W}px)`;
+    dots.forEach((d,k)=>d.classList.toggle('active', k===index));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight') go(index+1);
+    if(e.key==='ArrowLeft') go(index-1);
+  });
+
+  let startX=0, curX=0, dragging=false;
+  function down(x){ dragging=true; startX=x; curX=x; track.classList.add('dragging'); }
+  function move(x){ if(!dragging) return; curX=x; track.style.transform = `translateX(${-index*W + (curX-startX)}px)`; }
+  function up(){
+    if(!dragging) return; dragging=false; track.classList.remove('dragging');
+    const dx = curX-startX;
+    if(Math.abs(dx) > 55) go(index + (dx<0?1:-1)); else go(index);
+  }
+  viewport.addEventListener('mousedown', e=>{ e.preventDefault(); down(e.clientX); });
+  window.addEventListener('mousemove', e=>move(e.clientX));
+  window.addEventListener('mouseup', up);
+  viewport.addEventListener('touchstart', e=>down(e.touches[0].clientX), {passive:true});
+  viewport.addEventListener('touchmove', e=>move(e.touches[0].clientX), {passive:true});
+  viewport.addEventListener('touchend', up);
+</script>
+</body>
+</html>

@@ -1,0 +1,709 @@
+[
+  {
+    "text": "Usar",
+    "startMs": 0,
+    "endMs": 540,
+    "timestampMs": 640,
+    "confidence": 0.591278
+  },
+  {
+    "text": " herramientas",
+    "startMs": 540,
+    "endMs": 1160,
+    "timestampMs": 1040,
+    "confidence": 0.992068
+  },
+  {
+    "text": " como",
+    "startMs": 1160,
+    "endMs": 1450,
+    "timestampMs": 1480,
+    "confidence": 0.994082
+  },
+  {
+    "text": " Claude,",
+    "startMs": 1450,
+    "endMs": 1990,
+    "timestampMs": 1800,
+    "confidence": 0.39929
+  },
+  {
+    "text": " ChatGPT",
+    "startMs": 1990,
+    "endMs": 2540,
+    "timestampMs": 2080,
+    "confidence": 0.140497
+  },
+  {
+    "text": " o",
+    "startMs": 2540,
+    "endMs": 2630,
+    "timestampMs": 2640,
+    "confidence": 0.804348
+  },
+  {
+    "text": " Gemini",
+    "startMs": 2630,
+    "endMs": 3260,
+    "timestampMs": 2840,
+    "confidence": 0.401811
+  },
+  {
+    "text": " es",
+    "startMs": 3260,
+    "endMs": 3300,
+    "timestampMs": 3340,
+    "confidence": 0.61981
+  },
+  {
+    "text": " un",
+    "startMs": 3300,
+    "endMs": 3400,
+    "timestampMs": 3480,
+    "confidence": 0.984838
+  },
+  {
+    "text": " gran",
+    "startMs": 3400,
+    "endMs": 3620,
+    "timestampMs": 3640,
+    "confidence": 0.988961
+  },
+  {
+    "text": " inicio,",
+    "startMs": 3620,
+    "endMs": 4110,
+    "timestampMs": 3860,
+    "confidence": 0.692653
+  },
+  {
+    "text": " sobre",
+    "startMs": 4110,
+    "endMs": 4490,
+    "timestampMs": 4340,
+    "confidence": 0.670751
+  },
+  {
+    "text": " todo",
+    "startMs": 4490,
+    "endMs": 4640,
+    "timestampMs": 4580,
+    "confidence": 0.992682
+  },
+  {
+    "text": " en",
+    "startMs": 4640,
+    "endMs": 4760,
+    "timestampMs": 4760,
+    "confidence": 0.922465
+  },
+  {
+    "text": " el",
+    "startMs": 4760,
+    "endMs": 4840,
+    "timestampMs": 4840,
+    "confidence": 0.968199
+  },
+  {
+    "text": " sector",
+    "startMs": 4840,
+    "endMs": 5120,
+    "timestampMs": 5060,
+    "confidence": 0.872097
+  },
+  {
+    "text": " inmobiliario.",
+    "startMs": 5120,
+    "endMs": 6270,
+    "timestampMs": 5260,
+    "confidence": 0.487296
+  },
+  {
+    "text": " Sin",
+    "startMs": 6270,
+    "endMs": 6350,
+    "timestampMs": 6420,
+    "confidence": 0.632321
+  },
+  {
+    "text": " embargo,",
+    "startMs": 6350,
+    "endMs": 6780,
+    "timestampMs": 6780,
+    "confidence": 0.932394
+  },
+  {
+    "text": " para",
+    "startMs": 6780,
+    "endMs": 7160,
+    "timestampMs": 7440,
+    "confidence": 0.99151
+  },
+  {
+    "text": " que",
+    "startMs": 7160,
+    "endMs": 7270,
+    "timestampMs": 7540,
+    "confidence": 0.98597
+  },
+  {
+    "text": " la",
+    "startMs": 7270,
+    "endMs": 7310,
+    "timestampMs": 7640,
+    "confidence": 0.957194
+  },
+  {
+    "text": " Inteligencia",
+    "startMs": 7310,
+    "endMs": 7920,
+    "timestampMs": 7760,
+    "confidence": 0.369437
+  },
+  {
+    "text": " Artificial",
+    "startMs": 7920,
+    "endMs": 8540,
+    "timestampMs": 8160,
+    "confidence": 0.809986
+  },
+  {
+    "text": " realmente",
+    "startMs": 8540,
+    "endMs": 9360,
+    "timestampMs": 9080,
+    "confidence": 0.946359
+  },
+  {
+    "text": " revolucione",
+    "startMs": 9360,
+    "endMs": 10000,
+    "timestampMs": 9560,
+    "confidence": 0.842623
+  },
+  {
+    "text": " y",
+    "startMs": 10000,
+    "endMs": 10100,
+    "timestampMs": 10140,
+    "confidence": 0.924556
+  },
+  {
+    "text": " automatice",
+    "startMs": 10100,
+    "endMs": 10640,
+    "timestampMs": 10420,
+    "confidence": 0.559188
+  },
+  {
+    "text": " tus",
+    "startMs": 10640,
+    "endMs": 10980,
+    "timestampMs": 10820,
+    "confidence": 0.993657
+  },
+  {
+    "text": " procesos,",
+    "startMs": 10980,
+    "endMs": 11960,
+    "timestampMs": 11300,
+    "confidence": 0.826183
+  },
+  {
+    "text": " necesitas",
+    "startMs": 11960,
+    "endMs": 12340,
+    "timestampMs": 12100,
+    "confidence": 0.932214
+  },
+  {
+    "text": " integrarlas",
+    "startMs": 12340,
+    "endMs": 13190,
+    "timestampMs": 12620,
+    "confidence": 0.737462
+  },
+  {
+    "text": " sí",
+    "startMs": 13190,
+    "endMs": 13440,
+    "timestampMs": 13280,
+    "confidence": 0.284491
+  },
+  {
+    "text": " o",
+    "startMs": 13440,
+    "endMs": 13520,
+    "timestampMs": 13360,
+    "confidence": 0.976384
+  },
+  {
+    "text": " sí",
+    "startMs": 13520,
+    "endMs": 13740,
+    "timestampMs": 13560,
+    "confidence": 0.994268
+  },
+  {
+    "text": " a",
+    "startMs": 13740,
+    "endMs": 13790,
+    "timestampMs": 13680,
+    "confidence": 0.961008
+  },
+  {
+    "text": " tu",
+    "startMs": 13790,
+    "endMs": 13940,
+    "timestampMs": 13760,
+    "confidence": 0.980051
+  },
+  {
+    "text": " medida.",
+    "startMs": 13940,
+    "endMs": 14760,
+    "timestampMs": 14140,
+    "confidence": 0.95229
+  },
+  {
+    "text": " En",
+    "startMs": 14760,
+    "endMs": 15020,
+    "timestampMs": 17140,
+    "confidence": 0.924381
+  },
+  {
+    "text": " Sixteam",
+    "startMs": 15020,
+    "endMs": 15560,
+    "timestampMs": 17380,
+    "confidence": 0.0103205
+  },
+  {
+    "text": " somos",
+    "startMs": 15560,
+    "endMs": 16000,
+    "timestampMs": 17680,
+    "confidence": 0.912026
+  },
+  {
+    "text": " el",
+    "startMs": 16000,
+    "endMs": 16150,
+    "timestampMs": 17900,
+    "confidence": 0.984312
+  },
+  {
+    "text": " equipo",
+    "startMs": 16150,
+    "endMs": 16660,
+    "timestampMs": 18080,
+    "confidence": 0.983686
+  },
+  {
+    "text": " de",
+    "startMs": 16660,
+    "endMs": 17060,
+    "timestampMs": 18280,
+    "confidence": 0.995076
+  },
+  {
+    "text": " tecnología",
+    "startMs": 17060,
+    "endMs": 17710,
+    "timestampMs": 18700,
+    "confidence": 0.845561
+  },
+  {
+    "text": " con",
+    "startMs": 17710,
+    "endMs": 18030,
+    "timestampMs": 18980,
+    "confidence": 0.958903
+  },
+  {
+    "text": " experiencia",
+    "startMs": 18030,
+    "endMs": 18900,
+    "timestampMs": 19380,
+    "confidence": 0.495489
+  },
+  {
+    "text": " en",
+    "startMs": 18900,
+    "endMs": 19020,
+    "timestampMs": 19560,
+    "confidence": 0.962759
+  },
+  {
+    "text": " bienes",
+    "startMs": 19020,
+    "endMs": 19510,
+    "timestampMs": 19720,
+    "confidence": 0.7506
+  },
+  {
+    "text": " raíces",
+    "startMs": 19510,
+    "endMs": 20070,
+    "timestampMs": 20040,
+    "confidence": 0.648475
+  },
+  {
+    "text": " que",
+    "startMs": 20070,
+    "endMs": 20610,
+    "timestampMs": 20660,
+    "confidence": 0.953263
+  },
+  {
+    "text": " siempre",
+    "startMs": 20610,
+    "endMs": 21000,
+    "timestampMs": 20960,
+    "confidence": 0.993121
+  },
+  {
+    "text": " has",
+    "startMs": 21000,
+    "endMs": 21180,
+    "timestampMs": 21100,
+    "confidence": 0.36762
+  },
+  {
+    "text": " necesitado.",
+    "startMs": 21180,
+    "endMs": 22090,
+    "timestampMs": 21380,
+    "confidence": 0.937829
+  },
+  {
+    "text": " Analizamos",
+    "startMs": 22090,
+    "endMs": 22650,
+    "timestampMs": 22240,
+    "confidence": 0.866837
+  },
+  {
+    "text": " tus",
+    "startMs": 22650,
+    "endMs": 22780,
+    "timestampMs": 22700,
+    "confidence": 0.997556
+  },
+  {
+    "text": " actividades",
+    "startMs": 22780,
+    "endMs": 23510,
+    "timestampMs": 22920,
+    "confidence": 0.996993
+  },
+  {
+    "text": " e",
+    "startMs": 23510,
+    "endMs": 23670,
+    "timestampMs": 23740,
+    "confidence": 0.91051
+  },
+  {
+    "text": " integramos",
+    "startMs": 23670,
+    "endMs": 24160,
+    "timestampMs": 23900,
+    "confidence": 0.800834
+  },
+  {
+    "text": " Inteligencia",
+    "startMs": 24160,
+    "endMs": 24730,
+    "timestampMs": 24360,
+    "confidence": 0.377983
+  },
+  {
+    "text": " Artificial",
+    "startMs": 24730,
+    "endMs": 25090,
+    "timestampMs": 24800,
+    "confidence": 0.96586
+  },
+  {
+    "text": " de",
+    "startMs": 25090,
+    "endMs": 25180,
+    "timestampMs": 25220,
+    "confidence": 0.987777
+  },
+  {
+    "text": " manera",
+    "startMs": 25180,
+    "endMs": 25480,
+    "timestampMs": 25420,
+    "confidence": 0.974438
+  },
+  {
+    "text": " estratégica",
+    "startMs": 25480,
+    "endMs": 26210,
+    "timestampMs": 25820,
+    "confidence": 0.478916
+  },
+  {
+    "text": " para",
+    "startMs": 26210,
+    "endMs": 26440,
+    "timestampMs": 26400,
+    "confidence": 0.996132
+  },
+  {
+    "text": " maximizar",
+    "startMs": 26440,
+    "endMs": 26990,
+    "timestampMs": 26660,
+    "confidence": 0.993362
+  },
+  {
+    "text": " el",
+    "startMs": 26990,
+    "endMs": 27110,
+    "timestampMs": 27040,
+    "confidence": 0.992733
+  },
+  {
+    "text": " valor",
+    "startMs": 27110,
+    "endMs": 27450,
+    "timestampMs": 27220,
+    "confidence": 0.998828
+  },
+  {
+    "text": " que",
+    "startMs": 27450,
+    "endMs": 27590,
+    "timestampMs": 27380,
+    "confidence": 0.995721
+  },
+  {
+    "text": " te",
+    "startMs": 27590,
+    "endMs": 27710,
+    "timestampMs": 27500,
+    "confidence": 0.990212
+  },
+  {
+    "text": " genera.",
+    "startMs": 27710,
+    "endMs": 28320,
+    "timestampMs": 27700,
+    "confidence": 0.930923
+  },
+  {
+    "text": " Si",
+    "startMs": 28320,
+    "endMs": 28470,
+    "timestampMs": 28380,
+    "confidence": 0.874553
+  },
+  {
+    "text": " quieres",
+    "startMs": 28470,
+    "endMs": 28830,
+    "timestampMs": 28600,
+    "confidence": 0.992366
+  },
+  {
+    "text": " hacer",
+    "startMs": 28830,
+    "endMs": 29110,
+    "timestampMs": 28860,
+    "confidence": 0.972483
+  },
+  {
+    "text": " tu",
+    "startMs": 29110,
+    "endMs": 29240,
+    "timestampMs": 29040,
+    "confidence": 0.994503
+  },
+  {
+    "text": " empresa",
+    "startMs": 29240,
+    "endMs": 29680,
+    "timestampMs": 29440,
+    "confidence": 0.998294
+  },
+  {
+    "text": " más",
+    "startMs": 29680,
+    "endMs": 29880,
+    "timestampMs": 29860,
+    "confidence": 0.56122
+  },
+  {
+    "text": " productiva",
+    "startMs": 30030,
+    "endMs": 30480,
+    "timestampMs": 30260,
+    "confidence": 0.975595
+  },
+  {
+    "text": " y",
+    "startMs": 30480,
+    "endMs": 30540,
+    "timestampMs": 30740,
+    "confidence": 0.973331
+  },
+  {
+    "text": " eficiente,",
+    "startMs": 30540,
+    "endMs": 31280,
+    "timestampMs": 30820,
+    "confidence": 0.22038
+  },
+  {
+    "text": " escribe",
+    "startMs": 31280,
+    "endMs": 31680,
+    "timestampMs": 31780,
+    "confidence": 0.578692
+  },
+  {
+    "text": " manual",
+    "startMs": 31680,
+    "endMs": 32040,
+    "timestampMs": 32200,
+    "confidence": 0.91521
+  },
+  {
+    "text": " y",
+    "startMs": 32040,
+    "endMs": 32100,
+    "timestampMs": 32520,
+    "confidence": 0.970758
+  },
+  {
+    "text": " te",
+    "startMs": 32100,
+    "endMs": 32220,
+    "timestampMs": 32580,
+    "confidence": 0.978805
+  },
+  {
+    "text": " dejaré",
+    "startMs": 32220,
+    "endMs": 32640,
+    "timestampMs": 32800,
+    "confidence": 0.976582
+  },
+  {
+    "text": " un",
+    "startMs": 32640,
+    "endMs": 32760,
+    "timestampMs": 32980,
+    "confidence": 0.980421
+  },
+  {
+    "text": " manual",
+    "startMs": 32760,
+    "endMs": 33120,
+    "timestampMs": 33200,
+    "confidence": 0.996801
+  },
+  {
+    "text": " con",
+    "startMs": 33120,
+    "endMs": 33340,
+    "timestampMs": 33420,
+    "confidence": 0.992239
+  },
+  {
+    "text": " la",
+    "startMs": 33340,
+    "endMs": 33420,
+    "timestampMs": 33540,
+    "confidence": 0.976964
+  },
+  {
+    "text": " hoja",
+    "startMs": 33420,
+    "endMs": 33660,
+    "timestampMs": 33660,
+    "confidence": 0.982634
+  },
+  {
+    "text": " de",
+    "startMs": 33660,
+    "endMs": 33780,
+    "timestampMs": 33820,
+    "confidence": 0.995359
+  },
+  {
+    "text": " ruta",
+    "startMs": 33780,
+    "endMs": 34040,
+    "timestampMs": 33940,
+    "confidence": 0.896828
+  },
+  {
+    "text": " clara",
+    "startMs": 34040,
+    "endMs": 35200,
+    "timestampMs": 34320,
+    "confidence": 0.826294
+  },
+  {
+    "text": " para",
+    "startMs": 35200,
+    "endMs": 35420,
+    "timestampMs": 35360,
+    "confidence": 0.99907
+  },
+  {
+    "text": " empezar",
+    "startMs": 35420,
+    "endMs": 35810,
+    "timestampMs": 35620,
+    "confidence": 0.896723
+  },
+  {
+    "text": " a",
+    "startMs": 35810,
+    "endMs": 35880,
+    "timestampMs": 35800,
+    "confidence": 0.951916
+  },
+  {
+    "text": " integrar",
+    "startMs": 35880,
+    "endMs": 36450,
+    "timestampMs": 35960,
+    "confidence": 0.995524
+  },
+  {
+    "text": " tecnología",
+    "startMs": 36450,
+    "endMs": 36930,
+    "timestampMs": 36720,
+    "confidence": 0.933805
+  },
+  {
+    "text": " en",
+    "startMs": 36930,
+    "endMs": 37040,
+    "timestampMs": 37100,
+    "confidence": 0.982118
+  },
+  {
+    "text": " tu",
+    "startMs": 37040,
+    "endMs": 37150,
+    "timestampMs": 37160,
+    "confidence": 0.99229
+  },
+  {
+    "text": " negocio.",
+    "startMs": 37150,
+    "endMs": 37600,
+    "timestampMs": 37360,
+    "confidence": 0.977325
+  }
+]

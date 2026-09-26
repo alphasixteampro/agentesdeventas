@@ -112,6 +112,64 @@ Sixteam.pro
 
 ---
 
+## 💡 TOQUE DE VALOR · Día 10 — Caso real, sin pedir nada
+
+> Sin CTA de venta. El único objetivo es aportar valor y quedarte presente sin presionar.
+> Basado en un cliente real, anonimizado. Detalle completo (nombre real, solo uso interno
+> con permiso) en `marketing/casos-exito/mizar.md`.
+
+**Colombia 🇨🇴**
+```
+Hola [Nombre], sin nada que pedirte por ahora — solo te comparto algo real.
+
+Trabajamos con una constructora inmobiliaria en Colombia que recibía entre 800
+y 1.000 leads al mes por pauta digital (hasta 1.500 cuando un video se les
+volvía viral) y los estaba perdiendo: todo se atendía manual por WhatsApp,
+sin CRM, sin pipeline, sin forma de saber qué pasó con cada lead.
+
+Hoy: ningún lead se pierde, la gerencia ve el pipeline en tiempo real, y
+cuando tuvieron ese pico viral construimos un flujo que filtró
+automáticamente a los curiosos antes de que llegaran a las asesoras — para
+que solo atendieran interesados reales.
+
+Nos dijeron: "ahora sí puedo hacer seguimiento" y "ahora sí puedo hacer
+marketing con las bases de datos reales."
+
+No es pitch, es solo un ejemplo de lo que cambia cuando el proceso comercial
+se opera bien. Que tengas buena semana, [Nombre].
+```
+
+**Versión corta (WhatsApp/LinkedIn si el canal pide brevedad):**
+```
+[Nombre], un dato real sin pedirte nada: un cliente inmobiliario nuestro
+perdía leads porque respondía todo a mano por WhatsApp. Hoy no se les escapa
+ni uno, y la frase que más repiten es "ahora sí puedo hacer seguimiento".
+Justo eso es lo que buscamos resolver en cada cliente.
+```
+
+**USA 🇺🇸**
+```
+Hi [Name], nothing to ask for here — just sharing something real.
+
+We work with a real estate developer in Latin America getting 800–1,000
+leads a month from paid ads (up to 1,500 when a video goes viral) — and
+losing them. Everything was handled manually over WhatsApp: no CRM, no
+pipeline, no way to know what happened to each lead.
+
+Today: no lead falls through the cracks, leadership sees the pipeline in
+real time, and when they had a viral spike we built a flow from scratch
+that filtered out the curious before they ever reached the sales team — so
+reps only talked to real buyers.
+
+Their words: "now I can actually do follow-up" and "now I can do marketing
+with real data."
+
+Not a pitch — just an example of what changes when the sales process is
+actually operated well. Hope things are going well, [Name].
+```
+
+---
+
 ## 📧 SEGUIMIENTO 4 · Email final · Día 14 — "Cierro el hilo"
 
 **Colombia 🇨🇴**
@@ -156,4 +214,4 @@ Sixteam.pro
 
 ---
 
-**NOTA:** el toque de valor del Día 10 (compartir un post o dato útil sin pedir nada) no lleva plantilla: usa contenido orgánico real de tu LinkedIn. Ver `00-GUIA`.
+**NOTA:** el toque de valor del Día 10 ya tiene plantilla arriba (caso real de Mizar, anonimizado). Puedes alternarlo con contenido orgánico real de tu LinkedIn si prefieres variar. Ver `00-GUIA`.

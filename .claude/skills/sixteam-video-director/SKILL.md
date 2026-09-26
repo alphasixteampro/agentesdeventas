@@ -102,6 +102,16 @@ Sixteam*: sigue [references/produccion-remotion.md](references/produccion-remoti
 marca para spring configs, timings y el vocabulario visual (dot-grid, badge pulsante, cards con
 "efecto vacío") ya validados en `Reel10sOperaciones`.
 
+## STEP 4b — B-roll, stock e imágenes para dar más dinamismo
+
+Cuando el pedido es "hazlo más dinámico" insertando video/imágenes de apoyo (no solo captions y
+zoom sobre el talking-head), lee
+[references/b-roll-y-stock.md](references/b-roll-y-stock.md) — de dónde sacar video/foto/motion
+graphics gratuitos de uso comercial y, más importante, el criterio de cuándo un corte a b-roll
+suma y cuándo resta credibilidad en una pieza educativa B2B. La mecánica de insertar el clip
+(`<Video>`, `<TransitionSeries>`, `<Img>`) sigue viviendo en `remotion-markup` — este archivo no la
+duplica, solo dice de dónde sacar el material y cuánto/cuándo usarlo.
+
 ## STEP 5 — Guardar y renderizar
 
 - Guión/storyboard: `contenido-social/videos/<slug>/script.md` + `storyboard.md`.
@@ -115,3 +125,4 @@ marca para spring configs, timings y el vocabulario visual (dot-grid, badge puls
 |---|---|---|
 | [Estructura Viral](references/estructura-viral.md) | Hooks, ritmo/retención, specs por plataforma, captions quemados, sonido | Escribiendo o auditando guión/storyboard |
 | [Producción Remotion](references/produccion-remotion.md) | Estructura del proyecto, theme.ts, gotcha de escala tipográfica, motion de marca, render y su fallback | Escribiendo o depurando la composición Remotion |
+| [B-roll y Stock](references/b-roll-y-stock.md) | Bancos de video/foto/motion graphics gratuitos, criterio de cuándo usar b-roll, cómo encajar 16:9 en 9:16 | Agregando material de apoyo (video/imágenes) a una pieza existente |

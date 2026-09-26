@@ -47,7 +47,7 @@ Cada prospecto entra en esta secuencia. Si responde en cualquier punto, **detene
 | **3** | WhatsApp | Seguimiento corto | `03` · Seguimiento 1 |
 | **5** | LinkedIn DM | Mensaje directo (tras aceptar conexión) | `03` · Seguimiento 2 |
 | **7** | Email | "El cálculo que duele" | `03` · Seguimiento 3 |
-| **10** | LinkedIn / Email | Toque de valor: comparte un post o dato útil, sin pedir nada | — |
+| **10** | LinkedIn / Email | Toque de valor: caso real (anonimizado), sin pedir nada | `03` · Toque de valor |
 | **14** | Email | "Cierro el hilo" (breakup) | `03` · Seguimiento 4 |
 
 **Llamada en frío (`04`):** úsala en paralelo entre el Día 1 y el Día 7 cuando tengas el teléfono. La llamada + el email se potencian: si dejaste voicemail, menciónalo en el email de seguimiento.
@@ -94,6 +94,12 @@ Regla: la `[línea-1]` debe ser verificable y específica. Si no encuentras nada
 
 **Por validar antes de usar (claim propio de Sixteam):**
 - ⚠️ "Aumento de 30–35% en tasa de cierre en 90 días" → es un **objetivo**, no un resultado garantizado. En las piezas está redactado como meta. Reemplázalo con una métrica real de un caso tuyo cuando la tengas, y entonces conviértelo en prueba social con nombre del cliente.
+
+**Primer caso real disponible (cualitativo, sin cifra inventada):**
+- Cliente inmobiliario real (anonimizado en piezas externas) — de leads perdidos y atención 100%
+  manual a cero leads sin atender, dashboard en tiempo real y flujo de validación para picos
+  virales. Testimonios directos del cliente. Detalle completo: `marketing/casos-exito/mizar.md`.
+  Versión lista para enviar: Día 10 de `03-seguimientos-multicanal.md`.
 
 ---
 

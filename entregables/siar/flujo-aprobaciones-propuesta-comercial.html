@@ -1,0 +1,764 @@
+<!--
+  DIRECTION CONTRACT
+
+  THESIS: Una ficha de proceso, no un diagrama decorativo. Rechaza el flowchart de cajas flotantes
+  y flechas curvas: el proceso se lee como una norma interna impresa, donde cada transición declara
+  quién actúa, qué responde y a quién avisa el sistema.
+
+  OWN-WORLD: Papel blanco, tinta grafito, filetes de 0.75 pt. Archivo (grotesca) para toda la voz
+  editorial; Azeret Mono exclusivamente para cadenas literales del CRM (nombres de botón). Tres
+  colores funcionales, nunca decorativos: verde = avance humano, azul = automatización del sistema,
+  óxido punteado = retorno. Sin sombras, sin gradientes, sin tarjetas redondeadas.
+
+  STORY: Quien lo lee entiende en un vistazo que hay 5 estados, 4 aprobaciones obligatorias y una
+  sola ruta de retorno — y sabe exactamente qué botón le toca a él.
+
+  FIRST VIEWPORT: Título y franja de cifras arriba; leyenda de notación; luego la espina verde
+  numerada bajando por la izquierda con los estados, y a su derecha la retícula fija
+  Acción · Validación · Notificación. El riel óxido punteado sube por el margen derecho.
+
+  FORM: Ficha de proceso institucional. Sin tirada de concept-seed: el encargo especifica el
+  contenido nodo por nodo, así que se maqueta directo (new-work §3).
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flujo de aprobaciones de la propuesta comercial — Módulo Tratos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#ffffff;
+    --backdrop:#e7e8ec;
+    --ink:#15181d;
+    --graphite:#575e69;
+    --hair:#ccd2da;
+    --hair-soft:#e2e6eb;
+    --fill:#f4f6f8;
+    --go:#0f6b4f;        /* avance — decisión humana que promueve el trato */
+    --sys:#1f4d8f;       /* automatización del CRM */
+    --back:#a32b1c;      /* retorno / rechazo */
+    --spine:19mm;        /* canal izquierdo: espina de avance */
+    --gutter:10mm;       /* canal derecho: riel de retorno */
+  }
+
+  @page{ size:A4; margin:0; }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ background:var(--backdrop); }
+
+  body{
+    font-family:"Archivo","Helvetica Neue",sans-serif;
+    font-weight:400;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"kern" 1,"liga" 1;
+    text-rendering:optimizeLegibility;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;      /* nunca estirar la hoja a la altura del viewport */
+    padding:14mm 6mm;
+  }
+
+  .sheet{
+    width:210mm;
+    height:297mm;
+    background:var(--paper);
+    padding:10mm 10mm 6mm;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 2mm 8mm rgba(21,24,29,.16);
+  }
+
+  /* ─────────────────────────── Encabezado ─────────────────────────── */
+
+  .head{ border-bottom:1.6px solid var(--ink); padding-bottom:2.2mm; }
+
+  .kicker{
+    font-size:6.2pt;
+    font-weight:600;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--graphite);
+  }
+
+  h1{
+    margin-top:1.8mm;
+    font-size:16.5pt;
+    font-weight:700;
+    letter-spacing:-.024em;
+    line-height:1.06;
+    max-width:168mm;
+    hyphens:none;
+    text-wrap:balance;
+  }
+
+  .deck{
+    margin-top:1.6mm;
+    font-size:8pt;
+    line-height:1.4;
+    color:var(--graphite);
+    max-width:152mm;
+  }
+
+  .stats{ display:flex; gap:7.5mm; margin-top:2.6mm; }
+
+  .stat dt{
+    font-size:5.6pt;
+    font-weight:600;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--graphite);
+  }
+
+  .stat dd{
+    font-size:10.5pt;
+    font-weight:700;
+    letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums lining-nums;
+    line-height:1.1;
+    margin-top:.4mm;
+  }
+
+  /* ─────────────────────────── Leyenda ─────────────────────────── */
+
+  .legend{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:4mm;
+    padding:1.6mm 0;
+    border-bottom:.75px solid var(--hair);
+    margin-bottom:2.2mm;
+  }
+
+  .key{
+    display:flex;
+    align-items:center;
+    gap:1.6mm;
+    font-size:6.2pt;
+    line-height:1.2;
+    color:var(--graphite);
+  }
+
+  .key b{ color:var(--ink); font-weight:600; }
+
+  .key .mark{ flex:none; width:8mm; display:flex; align-items:center; justify-content:center; }
+
+  .mark-node{ width:4.4mm; height:4.4mm; border:1.1px solid var(--ink); background:var(--fill); }
+  .mark-go{ width:8mm; height:0; border-top:1.4px solid var(--go); position:relative; }
+  .mark-go::after{
+    content:""; position:absolute; right:-.3mm; top:-1.25mm;
+    border-left:1.8mm solid var(--go);
+    border-top:1.25mm solid transparent;
+    border-bottom:1.25mm solid transparent;
+  }
+  .mark-back{ width:8mm; height:0; border-top:1.4px dashed var(--back); position:relative; }
+  .mark-back::after{
+    content:""; position:absolute; left:-.3mm; top:-1.25mm;
+    border-right:1.8mm solid var(--back);
+    border-top:1.25mm solid transparent;
+    border-bottom:1.25mm solid transparent;
+  }
+  .mark-sys{ color:var(--sys); }
+  .mark-sys svg{ width:4mm; height:4mm; }
+
+  /* ─────────────────────────── Retícula del flujo ─────────────────────────── */
+
+  .flow{ flex:1; display:flex; flex-direction:column; }
+
+  .cols{
+    display:grid;
+    grid-template-columns:var(--spine) 38mm 62mm 1fr var(--gutter);
+    align-items:end;
+    padding-bottom:1.1mm;
+    border-bottom:1.1px solid var(--ink);
+    margin-bottom:1.6mm;
+  }
+
+  .cols span{
+    font-size:6pt;
+    font-weight:600;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--graphite);
+  }
+
+  .cols .c1{ grid-column:2; color:var(--go); }
+  .cols .c2{ grid-column:3; padding-left:3.2mm; }
+  .cols .c3{ grid-column:4; padding-left:3.2mm; color:var(--sys); }
+
+  /* Zona con posibilidad de retorno: estados 1–4 y sus transiciones */
+  .zone{ position:relative; }
+
+  .rail{
+    position:absolute;
+    top:3.1mm;
+    bottom:4.6mm;
+    right:5mm;
+    border-left:1.4px dashed var(--back);
+  }
+
+  /* Entrada horizontal punteada: el trato vuelve a caer en el estado 1 */
+  .rail-in{
+    position:absolute;
+    top:3.1mm;
+    right:5mm;
+    width:calc(var(--gutter) - 5mm + 5mm);
+    border-top:1.4px dashed var(--back);
+  }
+  .rail-in::before{
+    content:"";
+    position:absolute; left:-2.3mm; top:-1.25mm;
+    border-right:2.3mm solid var(--back);
+    border-top:1.25mm solid transparent;
+    border-bottom:1.25mm solid transparent;
+  }
+
+  /* ── Nodo de estado ── */
+
+  .node{
+    position:relative;
+    padding-left:var(--spine);
+    padding-right:var(--gutter);
+  }
+
+  .node::before{ /* segmento de la espina de avance */
+    content:"";
+    position:absolute; left:7.6mm; top:0; bottom:0;
+    border-left:1.4px solid var(--go);
+  }
+  .node--first::before{ top:3.1mm; }
+  .node--last::before{ bottom:calc(100% - 3.1mm); }
+
+  .badge{
+    position:absolute;
+    left:4.4mm; top:.5mm;
+    width:6.5mm; height:6.5mm;
+    border-radius:50%;
+    background:var(--go);
+    color:#fff;
+    font-size:8pt;
+    font-weight:700;
+    font-variant-numeric:tabular-nums lining-nums;
+    display:flex; align-items:center; justify-content:center;
+    z-index:1;
+  }
+
+  .node-card{
+    border:1.1px solid var(--ink);
+    background:var(--fill);
+    padding:1.6mm 3mm 1.7mm;
+  }
+
+  .node-top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:4mm;
+  }
+
+  .node-name{
+    font-size:9.9pt;
+    font-weight:700;
+    letter-spacing:-.018em;
+    line-height:1.1;
+    hyphens:none;
+  }
+
+  .owner{
+    flex:none;
+    font-size:6pt;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    border:.75px solid var(--hair);
+    background:#fff;
+    padding:.8mm 1.8mm;
+    white-space:nowrap;
+  }
+
+  .node-do{
+    margin-top:1mm;
+    padding-top:1mm;
+    border-top:.75px solid var(--hair);
+    font-size:7.6pt;
+    line-height:1.38;
+    color:var(--graphite);
+  }
+
+  .node-do b{ color:var(--ink); font-weight:600; }
+
+  /* ── Transición ── */
+
+  .tr{
+    position:relative;
+    padding:1.1mm var(--gutter) 1.1mm var(--spine);
+  }
+
+  .tr::before{ /* espina continua */
+    content:"";
+    position:absolute; left:7.6mm; top:0; bottom:0;
+    border-left:1.4px solid var(--go);
+  }
+
+  .tr::after{ /* punta de flecha al entrar al siguiente estado */
+    content:"";
+    position:absolute; left:6.35mm; bottom:-.2mm;
+    border-top:2.4mm solid var(--go);
+    border-left:1.35mm solid transparent;
+    border-right:1.35mm solid transparent;
+  }
+
+  .tr-grid{
+    display:grid;
+    grid-template-columns:38mm 62mm 1fr;
+    border-top:.75px solid var(--hair);
+  }
+
+  /* Sin fila de retorno debajo (transición 1), la retícula cierra sola */
+  .tr-grid:last-child{ border-bottom:.75px solid var(--hair); }
+
+  .cell{ padding:2mm 3.2mm 2.1mm 0; }
+  .cell + .cell{ padding-left:3.2mm; border-left:.75px solid var(--hair-soft); }
+
+  .btn{
+    display:inline-block;
+    font-family:"Azeret Mono",ui-monospace,monospace;
+    font-size:6.8pt;
+    font-weight:500;
+    letter-spacing:-.012em;
+    line-height:1.22;
+    background:var(--go);
+    color:#fff;
+    padding:1.2mm 2mm;
+  }
+
+  .btn-alt{
+    display:inline-block;
+    font-family:"Azeret Mono",ui-monospace,monospace;
+    font-size:6.5pt;
+    font-weight:500;
+    line-height:1.2;
+    color:var(--back);
+    border:.9px dashed var(--back);
+    padding:.9mm 1.7mm;
+    margin-right:1.8mm;
+    white-space:nowrap;
+  }
+
+  .actor{
+    margin-top:1.6mm;
+    font-size:7.3pt;
+    line-height:1.3;
+    color:var(--graphite);
+  }
+  .actor b{ color:var(--ink); font-weight:600; }
+
+  .q{ list-style:none; display:flex; flex-direction:column; gap:1.2mm; }
+
+  .q li{
+    position:relative;
+    padding-left:3.8mm;
+    font-size:7.8pt;
+    line-height:1.28;
+  }
+
+  .q li::before{
+    content:"";
+    position:absolute; left:0; top:1.1mm;
+    width:2.3mm; height:2.3mm;
+    border:.9px solid var(--ink);
+  }
+
+  .none{ font-size:7.6pt; line-height:1.34; color:var(--graphite); }
+
+  .mailer{ display:flex; gap:1.8mm; }
+  .mailer svg{ flex:none; width:3.6mm; height:3.6mm; color:var(--sys); margin-top:.4mm; }
+
+  .mail-name{
+    font-size:7.6pt;
+    font-weight:600;
+    line-height:1.24;
+    color:var(--sys);
+  }
+
+  .mail-meta{
+    margin-top:1mm;
+    font-size:7.3pt;
+    line-height:1.3;
+    color:var(--graphite);
+  }
+  .mail-meta b{ color:var(--ink); font-weight:600; }
+
+  /* ── Fila de retorno: cruza el ancho completo y engancha con el riel ── */
+
+  .ret{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:0;
+    padding:1mm 0 1.1mm;
+    border-top:.75px dashed var(--back);
+  }
+
+  .ret::after{ /* tramo punteado hasta el riel del margen derecho */
+    content:"";
+    position:absolute;
+    top:50%;
+    left:100%;
+    width:calc(var(--gutter) - 5mm);
+    border-top:1.4px dashed var(--back);
+  }
+
+  .ret-label{
+    font-size:5.4pt;
+    font-weight:600;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--back);
+    width:41.2mm;
+    flex:none;
+  }
+
+  .ret-text{ font-size:7pt; line-height:1.25; color:var(--back); }
+
+  /* ── Cierre ── */
+
+  .close{ position:relative; padding:1.4mm var(--gutter) 0 var(--spine); }
+
+  .close-inner{
+    display:flex;
+    align-items:center;
+    gap:3.5mm;
+    border:1.1px solid var(--go);
+    padding:1.6mm 3mm;
+  }
+
+  .close-text{ font-size:7.7pt; line-height:1.34; color:var(--graphite); }
+  .close-text b{ color:var(--ink); font-weight:600; }
+
+  /* ─────────────────────────── Nota y pie ─────────────────────────── */
+
+  .rule-note{
+    display:flex;
+    gap:2.4mm;
+    margin-top:2.4mm;
+    padding:1.6mm 3mm;
+    border:1.1px dashed var(--back);
+  }
+
+  .rule-note svg{ flex:none; width:4.2mm; height:4.2mm; color:var(--back); margin-top:.2mm; }
+
+  .rule-note p{ font-size:7.7pt; line-height:1.38; }
+
+  .rule-note strong{
+    font-weight:700;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+    font-size:6.6pt;
+    color:var(--back);
+  }
+
+  footer{
+    margin-top:auto;
+    padding-top:1.8mm;
+    border-top:.75px solid var(--hair);
+    display:flex;
+    justify-content:space-between;
+    gap:6mm;
+    font-size:6pt;
+    letter-spacing:.05em;
+    color:var(--graphite);
+    text-transform:uppercase;
+    font-weight:500;
+  }
+
+  @media print{
+    /* Sin esta cota, Chrome redondea la altura y arroja una segunda página en blanco */
+    html,body{ background:#fff; width:210mm; height:297mm; overflow:hidden; }
+    body{ padding:0; display:block; }
+    .sheet{ box-shadow:none; width:210mm; height:297mm; }
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="head">
+    <p class="kicker">CRM &middot; Blueprint del m&oacute;dulo Tratos &middot; Sector privado</p>
+    <h1>Flujo de aprobaciones de la propuesta comercial</h1>
+    <p class="deck">
+      Recorrido completo desde la generaci&oacute;n de la solicitud hasta el env&iacute;o de la
+      propuesta. Cada transici&oacute;n exige una decisi&oacute;n humana y dispara una notificaci&oacute;n
+      autom&aacute;tica con enlace directo al trato en el&nbsp;CRM.
+    </p>
+    <dl class="stats">
+      <div class="stat"><dt>Estados</dt><dd>5</dd></div>
+      <div class="stat"><dt>Aprobaciones</dt><dd>4</dd></div>
+      <div class="stat"><dt>Preguntas de control</dt><dd>8</dd></div>
+      <div class="stat"><dt>Notificaciones</dt><dd>4</dd></div>
+      <div class="stat"><dt>Ruta de retorno</dt><dd>1</dd></div>
+    </dl>
+  </header>
+
+  <div class="legend">
+    <div class="key">
+      <span class="mark"><span class="mark-node"></span></span>
+      <span><b>Estado</b> del blueprint</span>
+    </div>
+    <div class="key">
+      <span class="mark"><span class="mark-go"></span></span>
+      <span><b>Avance</b> &mdash; bot&oacute;n del responsable</span>
+    </div>
+    <div class="key">
+      <span class="mark mark-sys">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </span>
+      <span><b>Notificaci&oacute;n autom&aacute;tica</b> con enlace al trato</span>
+    </div>
+    <div class="key">
+      <span class="mark"><span class="mark-back"></span></span>
+      <span><b>Retorno o rechazo</b> &mdash; vuelve al estado&nbsp;1</span>
+    </div>
+  </div>
+
+  <div class="flow">
+
+    <div class="cols">
+      <span class="c1">Acci&oacute;n</span>
+      <span class="c2">Validaci&oacute;n obligatoria &middot; S&iacute;&nbsp;/&nbsp;No</span>
+      <span class="c3">Notificaci&oacute;n autom&aacute;tica</span>
+    </div>
+
+    <div class="zone">
+      <div class="rail" aria-hidden="true"></div>
+      <div class="rail-in" aria-hidden="true"></div>
+
+      <!-- ESTADO 1 ─────────────────────────────────────────── -->
+      <section class="node node--first">
+        <span class="badge" aria-hidden="true">1</span>
+        <div class="node-card">
+          <div class="node-top">
+            <h2 class="node-name">Generaci&oacute;n de solicitud de propuesta</h2>
+            <span class="owner">Ejecutivo de ventas corporativas</span>
+          </div>
+          <p class="node-do">
+            <b>Actividad:</b> el propietario registra la informaci&oacute;n del cliente, adjunta los
+            documentos requeridos y somete la solicitud. Es el punto de partida y al que regresa todo
+            trato devuelto o rechazado.
+          </p>
+        </div>
+      </section>
+
+      <!-- TRANSICIÓN 1 ─────────────────────────────────────── -->
+      <div class="tr">
+        <div class="tr-grid">
+          <div class="cell">
+            <span class="btn">Enviar a Aprobaci&oacute;n</span>
+            <p class="actor">La ejecuta el <b>Ejecutivo de ventas corporativas</b>, propietario del trato.</p>
+          </div>
+          <div class="cell">
+            <p class="none">No exige preguntas de control: el ejecutivo &uacute;nicamente somete la
+              solicitud al flujo de aprobaciones.</p>
+          </div>
+          <div class="cell">
+            <div class="mailer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <p class="mail-name">&ldquo;Notificaci&oacute;n de validaci&oacute;n por comercial&rdquo;</p>
+                <p class="mail-meta">Para: <b>Coordinador Comercial</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADO 2 ─────────────────────────────────────────── -->
+      <section class="node">
+        <span class="badge" aria-hidden="true">2</span>
+        <div class="node-card">
+          <div class="node-top">
+            <h2 class="node-name">Validaci&oacute;n de servicio por Comercial</h2>
+            <span class="owner">Coordinador Comercial</span>
+          </div>
+          <p class="node-do">
+            <b>Actividad:</b> revisa la solicitud con criterio comercial &mdash; capacidad financiera
+            del cliente y conveniencia del negocio &mdash; y responde el cuestionario de control.
+          </p>
+        </div>
+      </section>
+
+      <!-- TRANSICIÓN 2 ─────────────────────────────────────── -->
+      <div class="tr">
+        <div class="tr-grid">
+          <div class="cell">
+            <span class="btn">Pasar validaci&oacute;n a operaciones</span>
+            <p class="actor">La ejecuta el <b>Coordinador Comercial</b>.</p>
+          </div>
+          <div class="cell">
+            <ul class="q">
+              <li>&iquest;Capacidad Financiera?</li>
+              <li>&iquest;Es rentable y/o estrat&eacute;gico, para la empresa?</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <div class="mailer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <p class="mail-name">&ldquo;Notificaci&oacute;n Alerta de servicio por operaciones&rdquo;</p>
+                <p class="mail-meta">Para: <b>Director de Operaciones</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ret">
+          <span class="ret-label">Alternativas</span>
+          <span class="btn-alt">Regresar a Ajustes</span>
+          <span class="btn-alt">Rechazar Solicitud</span>
+          <span class="ret-text">Devuelven el trato al estado&nbsp;1.</span>
+        </div>
+      </div>
+
+      <!-- ESTADO 3 ─────────────────────────────────────────── -->
+      <section class="node">
+        <span class="badge" aria-hidden="true">3</span>
+        <div class="node-card">
+          <div class="node-top">
+            <h2 class="node-name">Validaci&oacute;n de servicio por Operaciones</h2>
+            <span class="owner">Director de Operaciones</span>
+          </div>
+          <p class="node-do">
+            <b>Actividad:</b> verifica que existan recursos, capacidad y conocimiento para prestar el
+            servicio, confirma el registro del cliente y responde el cuestionario de control.
+          </p>
+        </div>
+      </section>
+
+      <!-- TRANSICIÓN 3 ─────────────────────────────────────── -->
+      <div class="tr">
+        <div class="tr-grid">
+          <div class="cell">
+            <span class="btn">Pasar validaci&oacute;n a financiera</span>
+            <p class="actor">La ejecuta el <b>Director de Operaciones</b>.</p>
+          </div>
+          <div class="cell">
+            <ul class="q">
+              <li>&iquest;Recursos para prestar el servicio?</li>
+              <li>&iquest;Conocimientos adicionales?</li>
+              <li>&iquest;Capacidad para prestar el servicio?</li>
+              <li>&iquest;Cliente est&aacute; registrado en la empresa?</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <div class="mailer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <p class="mail-name">&ldquo;Notificaci&oacute;n Alerta de validaci&oacute;n por financiera&rdquo;</p>
+                <p class="mail-meta">Para: <b>Director Financiero</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ret">
+          <span class="ret-label">Alternativas</span>
+          <span class="btn-alt">Regresar a Ajustes</span>
+          <span class="btn-alt">Rechazar Solicitud</span>
+          <span class="ret-text">Devuelven el trato al estado&nbsp;1.</span>
+        </div>
+      </div>
+
+      <!-- ESTADO 4 ─────────────────────────────────────────── -->
+      <section class="node">
+        <span class="badge" aria-hidden="true">4</span>
+        <div class="node-card">
+          <div class="node-top">
+            <h2 class="node-name">Validaci&oacute;n de servicio por Financiera</h2>
+            <span class="owner">Director Financiero</span>
+          </div>
+          <p class="node-do">
+            <b>Actividad:</b> revisa que la documentaci&oacute;n exigida est&eacute; adjunta al trato,
+            eval&uacute;a el comportamiento de pago del cliente y responde el cuestionario de control.
+          </p>
+        </div>
+      </section>
+
+      <!-- TRANSICIÓN 4 ─────────────────────────────────────── -->
+      <div class="tr">
+        <div class="tr-grid">
+          <div class="cell">
+            <span class="btn">Pasar a elaboraci&oacute;n de propuesta comercial</span>
+            <p class="actor">La ejecuta el <b>Director Financiero</b>.</p>
+          </div>
+          <div class="cell">
+            <ul class="q">
+              <li>&iquest;Se encuentran adjuntos los documentos requeridos?</li>
+              <li>&iquest;Cliente cuenta con mal comportamiento de pago?</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <div class="mailer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <div>
+                <p class="mail-name">&ldquo;Notificaci&oacute;n a propietario del trato&rdquo;</p>
+                <p class="mail-meta">Para: <b>Ejecutivo de ventas corporativas</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ret">
+          <span class="ret-label">Alternativas</span>
+          <span class="btn-alt">Regresar a Ajustes</span>
+          <span class="btn-alt">Rechazar Solicitud</span>
+          <span class="ret-text">Devuelven el trato al estado&nbsp;1.</span>
+        </div>
+      </div>
+    </div><!-- /zone -->
+
+    <!-- ESTADO 5 ───────────────────────────────────────────── -->
+    <section class="node node--last">
+      <span class="badge" aria-hidden="true">5</span>
+      <div class="node-card">
+        <div class="node-top">
+          <h2 class="node-name">Elaboraci&oacute;n de propuesta comercial</h2>
+          <span class="owner">Ejecutivo de ventas corporativas</span>
+        </div>
+        <p class="node-do">
+          <b>Actividad:</b> con las aprobaciones completas, genera el documento final de propuesta con
+          las plantillas autom&aacute;ticas existentes y lo env&iacute;a desde el CRM al correo del cliente.
+        </p>
+      </div>
+    </section>
+
+    <!-- CIERRE ─────────────────────────────────────────────── -->
+    <div class="close">
+      <div class="close-inner">
+        <span class="btn">Enviar propuesta al cliente</span>
+        <p class="close-text">
+          <b>Fin del recorrido.</b> El CRM env&iacute;a la propuesta y registra el env&iacute;o en el trato.
+        </p>
+      </div>
+    </div>
+
+    <div class="rule-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+      <div>
+        <p>
+          <strong>Regla de retorno&nbsp;&middot;&nbsp;</strong>En cualquier etapa, si un responsable acciona <b>Regresar a Ajustes</b> o <b>Rechazar
+          Solicitud</b>, el trato vuelve autom&aacute;ticamente al estado&nbsp;1 y el recorrido se repite
+          desde el inicio: las aprobaciones ya otorgadas no se conservan.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /flow -->
+
+  <footer>
+    <span>Blueprint CRM &middot; M&oacute;dulo Tratos &middot; Sector privado</span>
+    <span>Documento de referencia interna &middot; Equipo SIAR</span>
+  </footer>
+
+</div>

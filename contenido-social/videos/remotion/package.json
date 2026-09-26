@@ -6,8 +6,12 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@remotion/captions": "4.0.496",
     "@remotion/cli": "4.0.496",
     "@remotion/google-fonts": "4.0.496",
+    "@remotion/install-whisper-cpp": "4.0.496",
+    "@remotion/media": "4.0.496",
+    "@remotion/rough-notation": "4.0.496",
     "@remotion/transitions": "4.0.496",
     "react": "19.2.3",
     "react-dom": "19.2.3",

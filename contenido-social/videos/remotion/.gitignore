@@ -13,3 +13,7 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Whisper.cpp binary + models, downloaded for caption transcription — regeneratable
+# via .tmp/transcribe.mjs, and the model alone is ~500MB.
+.tmp
