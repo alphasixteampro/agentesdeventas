@@ -16,4 +16,6 @@ out
 
 # Whisper.cpp binary + models, downloaded for caption transcription — regeneratable
 # via .tmp/transcribe.mjs, and the model alone is ~500MB.
-.tmp
+.tmp/*
+!.tmp/transcribe.mjs
+!.tmp/merge-words.mjs
